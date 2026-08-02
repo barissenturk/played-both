@@ -1,0 +1,444 @@
+:root {
+  --ink: #10261c;
+  --ink-soft: #3d5a4c;
+  --paper: #f4f7f1;
+  --paper-2: #e7efe4;
+  --grass-deep: #12382a;
+  --grass: #1f5a40;
+  --lime: #d8f353;
+  --lime-ink: #1a2e0f;
+  --line: rgba(18, 56, 42, 0.14);
+  --danger: #b42318;
+  --shadow: 0 18px 50px rgba(16, 38, 28, 0.12);
+  --radius: 18px;
+  --font-display: "Teko", Impact, sans-serif;
+  --font-body: "Karla", "Segoe UI", sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-body);
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+.page {
+  position: relative;
+  min-height: 100vh;
+  overflow-x: clip;
+}
+
+.pitch {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 55% at 50% -10%, rgba(216, 243, 83, 0.28), transparent 55%),
+    radial-gradient(ellipse 60% 40% at 100% 20%, rgba(31, 90, 64, 0.18), transparent 50%),
+    linear-gradient(165deg, #dfead8 0%, #f4f7f1 42%, #eaf3e6 100%);
+  z-index: 0;
+}
+
+.pitch::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(18, 56, 42, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(18, 56, 42, 0.05) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: linear-gradient(to bottom, black 0%, transparent 78%);
+  pointer-events: none;
+}
+
+.pitch::after {
+  content: "";
+  position: absolute;
+  width: min(72vw, 640px);
+  aspect-ratio: 1;
+  left: 50%;
+  top: 8%;
+  transform: translateX(-50%);
+  border: 2px solid rgba(18, 56, 42, 0.1);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.shell {
+  position: relative;
+  z-index: 1;
+  width: min(920px, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: clamp(2.5rem, 8vh, 5rem) 0 4rem;
+}
+
+.hero {
+  animation: rise 0.7s ease both;
+}
+
+.brand {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(4.5rem, 16vw, 8.5rem);
+  font-weight: 700;
+  line-height: 0.85;
+  letter-spacing: 0.02em;
+  color: var(--grass-deep);
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  margin: 1rem 0 0.65rem;
+  max-width: 16ch;
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 5vw, 2.8rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  color: var(--ink);
+}
+
+.lede {
+  margin: 0;
+  max-width: 34ch;
+  font-size: 1.05rem;
+  line-height: 1.45;
+  color: var(--ink-soft);
+}
+
+.matchup {
+  margin-top: clamp(2rem, 5vh, 3rem);
+  display: grid;
+  gap: 1rem;
+  animation: rise 0.7s ease 0.12s both;
+}
+
+.matchup__teams {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 0.75rem;
+  align-items: end;
+}
+
+.matchup__swap {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 2px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.55);
+  color: var(--grass-deep);
+  font-size: 1.25rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.matchup__swap:hover:not(:disabled) {
+  transform: rotate(180deg);
+  background: #fff;
+}
+
+.matchup__swap:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.matchup__submit {
+  appearance: none;
+  border: 0;
+  border-radius: 999px;
+  padding: 0.95rem 1.4rem;
+  background: var(--lime);
+  color: var(--lime-ink);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.matchup__submit:hover:not(:disabled) {
+  transform: translateY(-1px);
+  filter: brightness(1.03);
+}
+
+.matchup__submit:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.team-select {
+  position: relative;
+  display: grid;
+  gap: 0.4rem;
+}
+
+.team-select__label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.team-select__field input,
+.team-select__chosen {
+  width: 100%;
+  min-height: 56px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(8px);
+  color: var(--ink);
+}
+
+.team-select__field input {
+  padding: 0.9rem 1rem;
+  outline: none;
+}
+
+.team-select__field input:focus {
+  border-color: var(--grass);
+  box-shadow: 0 0 0 3px rgba(31, 90, 64, 0.12);
+}
+
+.team-select__chosen {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.55rem 0.85rem;
+  cursor: pointer;
+  text-align: left;
+}
+
+.team-select__chosen-name {
+  flex: 1;
+  font-weight: 700;
+}
+
+.team-select__change {
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.team-select__logo,
+.team-select__menu img {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+  flex-shrink: 0;
+  background: #fff;
+  border-radius: 8px;
+}
+
+.team-select__logo--empty {
+  display: inline-block;
+  background: var(--paper-2);
+}
+
+.team-select__menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  z-index: 5;
+  margin: 0;
+  padding: 0.35rem;
+  list-style: none;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: var(--shadow);
+  max-height: 280px;
+  overflow: auto;
+  animation: pop 0.18s ease both;
+}
+
+.team-select__menu button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.55rem 0.6rem;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+}
+
+.team-select__menu button:hover,
+.team-select__menu button:focus-visible {
+  background: var(--paper-2);
+}
+
+.team-select__menu strong {
+  display: block;
+  font-size: 0.95rem;
+}
+
+.team-select__menu small {
+  color: var(--ink-soft);
+}
+
+.team-select__hint {
+  padding: 0.75rem;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+}
+
+.results {
+  margin-top: clamp(2.5rem, 6vh, 4rem);
+  animation: rise 0.55s ease both;
+}
+
+.results__head h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 600;
+  line-height: 1;
+}
+
+.results__head h2 span {
+  color: var(--grass);
+}
+
+.results__head p {
+  margin: 0.35rem 0 1.25rem;
+  color: var(--ink-soft);
+}
+
+.results__status {
+  margin: 0;
+  color: var(--ink-soft);
+}
+
+.results__status--error {
+  color: var(--danger);
+}
+
+.player-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.15rem;
+  border-top: 1px solid var(--line);
+}
+
+.player-row {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 0.9rem;
+  align-items: center;
+  padding: 0.85rem 0.15rem;
+  border-bottom: 1px solid var(--line);
+  animation: rise 0.45s ease both;
+  animation-delay: calc(var(--i) * 35ms);
+}
+
+.player-row__photo {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 14px;
+  background: var(--paper-2);
+}
+
+.player-row__photo--empty {
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  color: var(--grass-deep);
+}
+
+.player-row__main h3 {
+  margin: 0 0 0.35rem;
+  font-size: 1.05rem;
+}
+
+.player-row__stints {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem 1.1rem;
+}
+
+.player-row__stints span {
+  display: grid;
+  gap: 0.1rem;
+}
+
+.player-row__stints strong {
+  font-size: 0.82rem;
+}
+
+.player-row__stints em {
+  font-style: normal;
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 720px) {
+  .matchup__teams {
+    grid-template-columns: 1fr;
+  }
+
+  .matchup__swap {
+    margin: 0 auto;
+  }
+
+  .player-row {
+    grid-template-columns: 48px 1fr;
+  }
+
+  .player-row__photo {
+    width: 48px;
+    height: 48px;
+  }
+}
