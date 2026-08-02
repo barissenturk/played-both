@@ -1,6 +1,7 @@
-# KESIŞİM Frontend — Vercel deploy
+# played-both — Vercel deploy
 #
 # 1. Bu klasörü (frontend) GitHub'a bağla → Vercel Import
+#    Repo: https://github.com/barissenturk/played-both
 # 2. Root Directory: . (repo root = frontend)
 # 3. Environment Variable:
 #      VITE_API_URL=https://YOUR_API.up.railway.app
